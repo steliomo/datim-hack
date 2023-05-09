@@ -16,8 +16,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.openqa.selenium.WebDriver;
-
 import mz.org.columbia.datimhack.domain.SubmissionType;
 
 /**
@@ -33,6 +31,7 @@ public class MetadataFormController extends JFrame {
 	private JLabel dataFile;
 	private JButton browseFile;
 	private JLabel submissionType;
+	private JLabel viewBrowser;
 
 	private JTextField usernameField;
 	private JPasswordField passwordField;
@@ -41,7 +40,7 @@ public class MetadataFormController extends JFrame {
 
 	private ActionProcess actionProcess;
 
-	private ButtonGroup buttonGroup;
+	private ButtonGroup submissionTypeBtnGroup;
 
 	private JRadioButton input;
 
@@ -49,10 +48,14 @@ public class MetadataFormController extends JFrame {
 
 	private JButton close;
 
-	public MetadataFormController(final WebDriver browser) {
+	private ButtonGroup viewBrowserGroup;
+	private JRadioButton yesBtn;
+	private JRadioButton noBtn;
+
+	public MetadataFormController() {
 
 		this.setTitle("DATIM Hack - ICAP v1.0");
-		this.setSize(300, 250);
+		this.setSize(350, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 
@@ -89,15 +92,15 @@ public class MetadataFormController extends JFrame {
 		this.passwordField.setBounds(100, 50, 165, 25);
 		panel.add(this.passwordField);
 
-		this.buttonGroup = new ButtonGroup();
+		this.submissionTypeBtnGroup = new ButtonGroup();
 		this.input = new JRadioButton("Input");
 		this.input.setBounds(100, 110, 80, 25);
 
 		this.clear = new JRadioButton("Clear");
 		this.clear.setBounds(170, 110, 80, 25);
 
-		this.buttonGroup.add(this.input);
-		this.buttonGroup.add(this.clear);
+		this.submissionTypeBtnGroup.add(this.input);
+		this.submissionTypeBtnGroup.add(this.clear);
 		panel.add(this.input);
 		panel.add(this.clear);
 
@@ -115,12 +118,26 @@ public class MetadataFormController extends JFrame {
 			}
 		});
 
+		this.viewBrowser = new JLabel("View Browser:");
+		this.viewBrowser.setBounds(10, 170, 100, 25);
+		panel.add(this.viewBrowser);
+
+		this.viewBrowserGroup = new ButtonGroup();
+		this.yesBtn = new JRadioButton("Yes");
+		this.yesBtn.setBounds(100, 170, 80, 25);
+
+		this.noBtn = new JRadioButton("No (Recommended)");
+		this.noBtn.setBounds(170, 170, 160, 25);
+
+		panel.add(this.yesBtn);
+		panel.add(this.noBtn);
+
 		this.submit = new JButton("Submit");
-		this.submit.setBounds(10, 170, 80, 25);
+		this.submit.setBounds(10, 220, 80, 25);
 		panel.add(this.submit);
 
 		this.close = new JButton("Close");
-		this.close.setBounds(100, 170, 80, 25);
+		this.close.setBounds(100, 220, 80, 25);
 		panel.add(this.close);
 
 		this.submit.addActionListener(event -> {
@@ -141,8 +158,13 @@ public class MetadataFormController extends JFrame {
 				return;
 			}
 
-			if (this.buttonGroup.getSelection() == null) {
+			if (this.submissionTypeBtnGroup.getSelection() == null) {
 				JOptionPane.showMessageDialog(null, "Select the submissionType");
+				return;
+			}
+
+			if (this.viewBrowserGroup.getSelection() == null) {
+				JOptionPane.showMessageDialog(null, "Select browser visualization");
 				return;
 			}
 
@@ -151,7 +173,6 @@ public class MetadataFormController extends JFrame {
 		});
 
 		this.close.addActionListener(event -> {
-			browser.close();
 			System.exit(0);
 		});
 
@@ -185,5 +206,13 @@ public class MetadataFormController extends JFrame {
 		}
 
 		return SubmissionType.CLEAN;
+	}
+
+	public Boolean visulizeBrowser() {
+		if (this.yesBtn.isSelected()) {
+			return Boolean.TRUE;
+		}
+
+		return Boolean.FALSE;
 	}
 }

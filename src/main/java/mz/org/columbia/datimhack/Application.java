@@ -33,25 +33,35 @@ import mz.org.columbia.datimhack.domain.SubmissionType;
  */
 public class Application {
 
+	private static WebDriver browser;
+
 	public static void main(final String[] args) {
 		// System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
-		final ChromeOptions options = new ChromeOptions();
-		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--headless");
-
-		final WebDriver browser = new ChromeDriver(options);
-		browser.manage().window().maximize();
-
-		final MetadataFormController metadataForm = new MetadataFormController(browser);
+		final MetadataFormController metadataForm = new MetadataFormController();
 
 		metadataForm.setActionProcess(() -> {
 
+			if (metadataForm.visulizeBrowser()) {
+				Application.browser = new ChromeDriver();
+				Application.browser.manage().window().maximize();
+
+			} else {
+
+				final ChromeOptions options = new ChromeOptions();
+				options.addArguments("--remote-allow-origins=*");
+				options.addArguments("--headless");
+
+				Application.browser = new ChromeDriver(options);
+			}
+
+			metadataForm.visulizeBrowser();
+
 			final SleepTimer sleepTimer = new SleepTimerImpl();
-			final LoginPort loginPort = new LoginAdapter(browser, sleepTimer);
+			final LoginPort loginPort = new LoginAdapter(Application.browser, sleepTimer);
 			final DataReaderPort fileReaderPort = new FileReaderAdapter();
-			final InputDataPort inputDataPort = new DataProcessorAdapter(browser, sleepTimer);
-			final CleanDataPort cleanDataPort = new DataProcessorAdapter(browser, sleepTimer);
+			final InputDataPort inputDataPort = new DataProcessorAdapter(Application.browser, sleepTimer);
+			final CleanDataPort cleanDataPort = new DataProcessorAdapter(Application.browser, sleepTimer);
 
 			if (SubmissionType.INPUT.equals(metadataForm.getSubmissionType())) {
 				final InputDataCommand inputDataCommand = new InputDataCommand(metadataForm.getUsername(), metadataForm.getPassword(),
@@ -74,7 +84,7 @@ public class Application {
 				JOptionPane.showMessageDialog(null, records + " where successfully cleaned..");
 			}
 
-			browser.close();
+			Application.browser.close();
 		});
 	}
 }
