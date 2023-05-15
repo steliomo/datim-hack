@@ -19,7 +19,10 @@ public class InputDataCommand {
 
 	private SubmissionType submissionType;
 
-	public InputDataCommand(final String username, final String password, final String filename) {
+	private String url;
+
+	public InputDataCommand(final String url, final String username, final String password, final String filename) {
+		this.url = url;
 		this.username = username;
 		this.password = password;
 		this.filename = filename;
@@ -40,5 +43,9 @@ public class InputDataCommand {
 
 	public SubmissionType getSubmissionType() {
 		return this.submissionType;
+	}
+
+	public String getUrl() {
+		return this.url;
 	}
 }

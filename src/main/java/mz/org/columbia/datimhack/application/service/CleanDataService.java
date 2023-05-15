@@ -38,9 +38,9 @@ public class CleanDataService implements CleanDataUseCase {
 
 		final List<GenericObject> data = this.dataReaderPort.readData(cleanDataCommand.getFilename());
 
-		this.loginPort.login(cleanDataCommand.getUsername(), cleanDataCommand.getPassword());
+		this.loginPort.login(cleanDataCommand.getUrl(), cleanDataCommand.getUsername(), cleanDataCommand.getPassword());
 
-		final int records = this.cleanDataPort.cleanData(data);
+		final int records = this.cleanDataPort.cleanData(cleanDataCommand.getUrl(), data);
 
 		return records;
 	}

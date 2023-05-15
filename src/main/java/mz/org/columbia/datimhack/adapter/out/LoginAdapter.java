@@ -19,8 +19,6 @@ import mz.org.columbia.datimhack.common.SleepTimer;
  */
 public class LoginAdapter implements LoginPort {
 
-	private static final String DATIM_URL = "https://www.datim.org";
-
 	private final WebDriver browser;
 
 	private final SleepTimer sleepTimer;
@@ -31,8 +29,8 @@ public class LoginAdapter implements LoginPort {
 	}
 
 	@Override
-	public void login(final String username, final String password) {
-		this.browser.get(LoginAdapter.DATIM_URL);
+	public void login(final String url, final String username, final String password) {
+		this.browser.get(url);
 
 		this.browser.findElement(By.tagName("button")).click();
 		this.browser.findElement(By.id("j_username")).sendKeys(username);

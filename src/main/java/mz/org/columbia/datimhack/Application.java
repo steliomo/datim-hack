@@ -64,24 +64,33 @@ public class Application {
 			final CleanDataPort cleanDataPort = new DataProcessorAdapter(Application.browser, sleepTimer);
 
 			if (SubmissionType.INPUT.equals(metadataForm.getSubmissionType())) {
-				final InputDataCommand inputDataCommand = new InputDataCommand(metadataForm.getUsername(), metadataForm.getPassword(),
+				final InputDataCommand inputDataCommand = new InputDataCommand(metadataForm.getUrl(), metadataForm.getUsername(),
+						metadataForm.getPassword(),
 						metadataForm.getFileName());
 
 				final InputDataUseCase inputDataUseCase = new InputDataService(loginPort, fileReaderPort, inputDataPort);
 
-				final int records = inputDataUseCase.inputData(inputDataCommand);
+				try {
+					final int records = inputDataUseCase.inputData(inputDataCommand);
+					JOptionPane.showMessageDialog(null, records + " where successfully submited..");
+				} catch (final Exception e) {
+					JOptionPane.showMessageDialog(null, "There was an error processing data. Please try again!");
+				}
 
-				JOptionPane.showMessageDialog(null, records + " where successfully submited..");
 			} else {
 
-				final CleanDataCommand cleanDataCommand = new CleanDataCommand(metadataForm.getUsername(), metadataForm.getPassword(),
+				final CleanDataCommand cleanDataCommand = new CleanDataCommand(metadataForm.getUrl(), metadataForm.getUsername(),
+						metadataForm.getPassword(),
 						metadataForm.getFileName());
 
 				final CleanDataUseCase cleanDataUseCase = new CleanDataService(loginPort, fileReaderPort, cleanDataPort);
 
-				final int records = cleanDataUseCase.cleanData(cleanDataCommand);
-
-				JOptionPane.showMessageDialog(null, records + " where successfully cleaned..");
+				try {
+					final int records = cleanDataUseCase.cleanData(cleanDataCommand);
+					JOptionPane.showMessageDialog(null, records + " where successfully cleaned..");
+				} catch (final Exception e) {
+					JOptionPane.showMessageDialog(null, "There was an error cleaning data. Please try again!");
+				}
 			}
 
 			Application.browser.close();

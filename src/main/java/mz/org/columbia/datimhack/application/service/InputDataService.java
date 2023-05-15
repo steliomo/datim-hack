@@ -40,9 +40,9 @@ public class InputDataService implements InputDataUseCase {
 
 		final List<GenericObject> data = this.dataReaderPort.readData(inputDataCommand.getFilename());
 
-		this.loginPort.login(inputDataCommand.getUsername(), inputDataCommand.getPassword());
+		this.loginPort.login(inputDataCommand.getUrl(), inputDataCommand.getUsername(), inputDataCommand.getPassword());
 
-		final int records = this.inputDataPort.inputData(data);
+		final int records = this.inputDataPort.inputData(inputDataCommand.getUrl(), data);
 
 		return records;
 	}

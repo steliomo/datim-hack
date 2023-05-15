@@ -13,6 +13,6 @@ import mz.org.columbia.datimhack.domain.GenericObject;
  */
 public interface CleanDataPort {
 
-	int cleanData(List<GenericObject> data);
+	int cleanData(String url, List<GenericObject> data);
 
 }

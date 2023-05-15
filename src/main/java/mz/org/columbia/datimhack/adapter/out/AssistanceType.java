@@ -9,9 +9,9 @@ package mz.org.columbia.datimhack.adapter.out;
  */
 public enum AssistanceType {
 
-	DSD("#PEPFAR_Form_2_DSD"),
+	DSD("#PEPFAR_Form_X_DSD"),
 
-	TA("#PEPFAR_Form_2_TA");
+	TA("#PEPFAR_Form_X_TA");
 
 	private String assistanceType;
 
@@ -22,5 +22,4 @@ public enum AssistanceType {
 	public String getAssistanceType() {
 		return this.assistanceType;
 	}
-
 }

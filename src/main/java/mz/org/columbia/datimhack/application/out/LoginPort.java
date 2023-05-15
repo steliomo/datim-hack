@@ -9,6 +9,6 @@ package mz.org.columbia.datimhack.application.out;
  */
 public interface LoginPort {
 
-	void login(String username, String password);
+	void login(String url, String username, String password);
 
 }

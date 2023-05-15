@@ -41,17 +41,18 @@ public class InputDataUseCaseTest {
 	@Test
 	public void shouldInputData() {
 
-		final InputDataCommand inputDataCommand = new InputDataCommand("stelio", "stelio", "CXCA_DATA.xlsx");
+		final InputDataCommand inputDataCommand = new InputDataCommand("url", "stelio", "stelio", "CXCA_DATA.xlsx");
 
 		final int expected = 10;
 
-		Mockito.when(this.inputDataPort.inputData(ArgumentMatchers.anyList())).thenReturn(expected);
+		Mockito.when(this.inputDataPort.inputData(ArgumentMatchers.anyString(), ArgumentMatchers.anyList())).thenReturn(expected);
 
 		final int data = this.inputDataUseCase.inputData(inputDataCommand);
 
-		Mockito.verify(this.loginPort, Mockito.times(1)).login(inputDataCommand.getUsername(), inputDataCommand.getPassword());
+		Mockito.verify(this.loginPort, Mockito.times(1)).login(ArgumentMatchers.anyString(), inputDataCommand.getUsername(),
+				inputDataCommand.getPassword());
 		Mockito.verify(this.fileReadPort, Mockito.times(1)).readData(inputDataCommand.getFilename());
-		Mockito.verify(this.inputDataPort, Mockito.times(1)).inputData(ArgumentMatchers.anyList());
+		Mockito.verify(this.inputDataPort, Mockito.times(1)).inputData(ArgumentMatchers.anyString(), ArgumentMatchers.anyList());
 
 		Assert.assertEquals(expected, data);
 	}

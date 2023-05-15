@@ -50,14 +50,14 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 	}
 
 	@Override
-	public int inputData(final List<GenericObject> data) {
+	public int inputData(final String url, final List<GenericObject> data) {
 		DataProcessorAdapter.logger.info("Starting the input process...");
 
 		int counter = 0;
 		Boolean periodMecanism = Boolean.FALSE;
 		String lastOrgUnit = null;
 
-		this.driver.get("https://www.datim.org/dhis-web-dataentry/index.action");
+		this.driver.get(url + "dhis-web-dataentry/index.action");
 		final JavascriptExecutor javascriptExecutor = (JavascriptExecutor) this.driver;
 
 		this.sleepTimer.sleep(120.0);
@@ -118,18 +118,20 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 	}
 
 	private void selectAssistanceTab(final JavascriptExecutor js, final GenericObject record) {
+		final TechnicalArea techArea = TechnicalArea.valueOf((String) record.getValue(DataProcessorAdapter.TECH_AREA));
+		final char page = techArea.getTechArea().charAt(techArea.getTechArea().length() - 1);
 		final AssistanceType assistanceType = AssistanceType.valueOf((String) record.getValue(DataProcessorAdapter.ASSISTANCE));
-		js.executeScript("document.querySelector(\"a[href='" + assistanceType.getAssistanceType() + "']\").click()");
+		js.executeScript("document.querySelector(\"a[href='" + assistanceType.getAssistanceType().replace('X', page) + "']\").click()");
 	}
 
 	@Override
-	public int cleanData(final List<GenericObject> data) {
+	public int cleanData(final String url, final List<GenericObject> data) {
 
 		int counter = 0;
 		Boolean periodMecanism = Boolean.FALSE;
 		String lastOrgUnit = null;
 
-		this.driver.get("https://www.datim.org/dhis-web-dataentry/index.action");
+		this.driver.get(url + "dhis-web-dataentry/index.action");
 		final JavascriptExecutor javascriptExecutor = (JavascriptExecutor) this.driver;
 
 		this.sleepTimer.sleep(120.0);

@@ -13,6 +13,6 @@ import mz.org.columbia.datimhack.domain.GenericObject;
  */
 public interface InputDataPort {
 
-	int inputData(List<GenericObject> data);
+	int inputData(String url, List<GenericObject> data);
 
 }

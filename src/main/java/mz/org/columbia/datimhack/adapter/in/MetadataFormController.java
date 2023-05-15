@@ -26,6 +26,7 @@ public class MetadataFormController extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private JLabel url;
 	private JLabel username;
 	private JLabel password;
 	private JLabel dataFile;
@@ -33,6 +34,7 @@ public class MetadataFormController extends JFrame {
 	private JLabel submissionType;
 	private JLabel viewBrowser;
 
+	private JTextField urlField;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JTextField dataFileField;
@@ -54,8 +56,8 @@ public class MetadataFormController extends JFrame {
 
 	public MetadataFormController() {
 
-		this.setTitle("DATIM Hack - ICAP v1.0");
-		this.setSize(350, 300);
+		this.setTitle("DATIM Hack - ICAP v1.1");
+		this.setSize(350, 320);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 
@@ -63,41 +65,49 @@ public class MetadataFormController extends JFrame {
 		this.add(panel);
 		panel.setLayout(null);
 
+		this.url = new JLabel("Url:");
+		this.url.setBounds(10, 20, 100, 25);
+		panel.add(this.url);
+
 		this.username = new JLabel("Username:");
-		this.username.setBounds(10, 20, 100, 25);
+		this.username.setBounds(10, 50, 100, 25);
 		panel.add(this.username);
 
 		this.password = new JLabel("Password:");
-		this.password.setBounds(10, 50, 100, 25);
+		this.password.setBounds(10, 80, 100, 25);
 		panel.add(this.password);
 
 		this.dataFile = new JLabel("Data File:");
-		this.dataFile.setBounds(10, 80, 100, 25);
+		this.dataFile.setBounds(10, 110, 100, 25);
 		panel.add(this.dataFile);
 
 		this.submissionType = new JLabel("Submi.Type:");
-		this.submissionType.setBounds(10, 110, 100, 25);
+		this.submissionType.setBounds(10, 140, 100, 25);
 		panel.add(this.submissionType);
 
 		this.dataFileField = new JTextField(20);
 		this.dataFileField.setEnabled(false);
-		this.dataFileField.setBounds(8, 140, 250, 25);
+		this.dataFileField.setBounds(8, 170, 250, 25);
 		panel.add(this.dataFileField);
 
+		this.urlField = new JTextField(20);
+		this.urlField.setBounds(100, 20, 165, 25);
+		panel.add(this.urlField);
+
 		this.usernameField = new JTextField(20);
-		this.usernameField.setBounds(100, 20, 165, 25);
+		this.usernameField.setBounds(100, 50, 165, 25);
 		panel.add(this.usernameField);
 
 		this.passwordField = new JPasswordField(20);
-		this.passwordField.setBounds(100, 50, 165, 25);
+		this.passwordField.setBounds(100, 80, 165, 25);
 		panel.add(this.passwordField);
 
 		this.submissionTypeBtnGroup = new ButtonGroup();
 		this.input = new JRadioButton("Input");
-		this.input.setBounds(100, 110, 80, 25);
+		this.input.setBounds(100, 140, 80, 25);
 
 		this.clear = new JRadioButton("Clear");
-		this.clear.setBounds(170, 110, 80, 25);
+		this.clear.setBounds(170, 140, 80, 25);
 
 		this.submissionTypeBtnGroup.add(this.input);
 		this.submissionTypeBtnGroup.add(this.clear);
@@ -105,7 +115,7 @@ public class MetadataFormController extends JFrame {
 		panel.add(this.clear);
 
 		this.browseFile = new JButton("Browse");
-		this.browseFile.setBounds(100, 80, 80, 25);
+		this.browseFile.setBounds(100, 110, 80, 25);
 		panel.add(this.browseFile);
 
 		this.browseFile.addActionListener(event -> {
@@ -119,28 +129,35 @@ public class MetadataFormController extends JFrame {
 		});
 
 		this.viewBrowser = new JLabel("View Browser:");
-		this.viewBrowser.setBounds(10, 170, 100, 25);
+		this.viewBrowser.setBounds(10, 200, 100, 25);
 		panel.add(this.viewBrowser);
 
 		this.viewBrowserGroup = new ButtonGroup();
 		this.yesBtn = new JRadioButton("Yes");
-		this.yesBtn.setBounds(100, 170, 80, 25);
+		this.yesBtn.setBounds(100, 200, 80, 25);
 
 		this.noBtn = new JRadioButton("No (Recommended)");
-		this.noBtn.setBounds(170, 170, 160, 25);
+		this.noBtn.setBounds(170, 200, 160, 25);
 
+		this.viewBrowserGroup.add(this.yesBtn);
+		this.viewBrowserGroup.add(this.noBtn);
 		panel.add(this.yesBtn);
 		panel.add(this.noBtn);
 
 		this.submit = new JButton("Submit");
-		this.submit.setBounds(10, 220, 80, 25);
+		this.submit.setBounds(10, 240, 80, 25);
 		panel.add(this.submit);
 
 		this.close = new JButton("Close");
-		this.close.setBounds(100, 220, 80, 25);
+		this.close.setBounds(100, 240, 80, 25);
 		panel.add(this.close);
 
 		this.submit.addActionListener(event -> {
+			if (this.urlField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Input DATIM url");
+				return;
+			}
+
 			if (this.usernameField.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Input your DATIM username");
 				return;
@@ -177,6 +194,10 @@ public class MetadataFormController extends JFrame {
 		});
 
 		this.setVisible(true);
+	}
+
+	public String getUrl() {
+		return this.urlField.getText();
 	}
 
 	public String getUsername() {

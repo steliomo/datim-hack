@@ -19,7 +19,10 @@ public class CleanDataCommand {
 
 	private SubmissionType submissionType;
 
-	public CleanDataCommand(final String username, final String password, final String filename) {
+	private String url;
+
+	public CleanDataCommand(final String url, final String username, final String password, final String filename) {
+		this.url = url;
 		this.username = username;
 		this.password = password;
 		this.filename = filename;
@@ -40,5 +43,9 @@ public class CleanDataCommand {
 
 	public SubmissionType getSubmissionType() {
 		return this.submissionType;
+	}
+
+	public String getUrl() {
+		return this.url;
 	}
 }
