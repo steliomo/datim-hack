@@ -57,7 +57,7 @@ public class MetadataFormController extends JFrame {
 	public MetadataFormController() {
 
 		this.setTitle("DATIM Hack - ICAP v1.1");
-		this.setSize(350, 320);
+		this.setSize(400, 320);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 
@@ -87,19 +87,19 @@ public class MetadataFormController extends JFrame {
 
 		this.dataFileField = new JTextField(20);
 		this.dataFileField.setEnabled(false);
-		this.dataFileField.setBounds(8, 170, 250, 25);
+		this.dataFileField.setBounds(8, 170, 320, 25);
 		panel.add(this.dataFileField);
 
 		this.urlField = new JTextField(20);
-		this.urlField.setBounds(100, 20, 165, 25);
+		this.urlField.setBounds(100, 20, 200, 25);
 		panel.add(this.urlField);
 
 		this.usernameField = new JTextField(20);
-		this.usernameField.setBounds(100, 50, 165, 25);
+		this.usernameField.setBounds(100, 50, 200, 25);
 		panel.add(this.usernameField);
 
 		this.passwordField = new JPasswordField(20);
-		this.passwordField.setBounds(100, 80, 165, 25);
+		this.passwordField.setBounds(100, 80, 200, 25);
 		panel.add(this.passwordField);
 
 		this.submissionTypeBtnGroup = new ButtonGroup();
@@ -107,7 +107,7 @@ public class MetadataFormController extends JFrame {
 		this.input.setBounds(100, 140, 80, 25);
 
 		this.clear = new JRadioButton("Clear");
-		this.clear.setBounds(170, 140, 80, 25);
+		this.clear.setBounds(200, 140, 80, 25);
 
 		this.submissionTypeBtnGroup.add(this.input);
 		this.submissionTypeBtnGroup.add(this.clear);
@@ -137,7 +137,7 @@ public class MetadataFormController extends JFrame {
 		this.yesBtn.setBounds(100, 200, 80, 25);
 
 		this.noBtn = new JRadioButton("No (Recommended)");
-		this.noBtn.setBounds(170, 200, 160, 25);
+		this.noBtn.setBounds(200, 200, 160, 25);
 
 		this.viewBrowserGroup.add(this.yesBtn);
 		this.viewBrowserGroup.add(this.noBtn);
@@ -145,11 +145,11 @@ public class MetadataFormController extends JFrame {
 		panel.add(this.noBtn);
 
 		this.submit = new JButton("Submit");
-		this.submit.setBounds(10, 240, 80, 25);
+		this.submit.setBounds(10, 240, 150, 25);
 		panel.add(this.submit);
 
 		this.close = new JButton("Close");
-		this.close.setBounds(100, 240, 80, 25);
+		this.close.setBounds(200, 240, 150, 25);
 		panel.add(this.close);
 
 		this.submit.addActionListener(event -> {
@@ -185,8 +185,13 @@ public class MetadataFormController extends JFrame {
 				return;
 			}
 
+			this.submit.setText("Processing");
+			this.submit.setEnabled(false);
+
 			this.actionProcess.process();
 
+			this.submit.setText("Submit");
+			this.submit.setEnabled(true);
 		});
 
 		this.close.addActionListener(event -> {
