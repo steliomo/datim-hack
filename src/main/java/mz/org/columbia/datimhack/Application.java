@@ -33,35 +33,35 @@ import mz.org.columbia.datimhack.domain.SubmissionType;
  */
 public class Application {
 
-	private static WebDriver browser;
-
 	public static void main(final String[] args) {
-		// System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
 		final MetadataFormController metadataForm = new MetadataFormController();
 
 		metadataForm.setActionProcess(() -> {
 
-			if (metadataForm.visulizeBrowser()) {
-				Application.browser = new ChromeDriver();
-				Application.browser.manage().window().maximize();
+			WebDriver browser = null;
 
-			} else {
+			if (metadataForm.visulizeBrowser()) {
+				System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
 				final ChromeOptions options = new ChromeOptions();
 				options.addArguments("--remote-allow-origins=*");
-				options.addArguments("--headless");
 
-				Application.browser = new ChromeDriver(options);
+				browser = new ChromeDriver(options);
+				browser.manage().window().maximize();
+
+			} else {
+
+				browser = new ChromeDriver();
 			}
 
 			metadataForm.visulizeBrowser();
 
 			final SleepTimer sleepTimer = new SleepTimerImpl();
-			final LoginPort loginPort = new LoginAdapter(Application.browser, sleepTimer);
+			final LoginPort loginPort = new LoginAdapter(browser, sleepTimer);
 			final DataReaderPort fileReaderPort = new FileReaderAdapter();
-			final InputDataPort inputDataPort = new DataProcessorAdapter(Application.browser, sleepTimer);
-			final CleanDataPort cleanDataPort = new DataProcessorAdapter(Application.browser, sleepTimer);
+			final InputDataPort inputDataPort = new DataProcessorAdapter(browser, sleepTimer);
+			final CleanDataPort cleanDataPort = new DataProcessorAdapter(browser, sleepTimer);
 
 			if (SubmissionType.INPUT.equals(metadataForm.getSubmissionType())) {
 				final InputDataCommand inputDataCommand = new InputDataCommand(metadataForm.getUrl(), metadataForm.getUsername(),
@@ -93,7 +93,7 @@ public class Application {
 				}
 			}
 
-			Application.browser.close();
+			browser.close();
 		});
 	}
 }

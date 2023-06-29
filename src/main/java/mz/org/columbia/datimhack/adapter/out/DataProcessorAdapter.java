@@ -78,7 +78,7 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 
 				final String mecanism = (String) record.getValue(DataProcessorAdapter.MECANISM);
 				javascriptExecutor.executeScript(
-						"document.getElementById('category-SH885jaRe0o').value= '" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
+						"document.getElementById('category-SH885jaRe0o').value='" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
 
 				periodMecanism = Boolean.TRUE;
 			}
@@ -152,7 +152,7 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 
 				final String mecanism = (String) record.getValue(DataProcessorAdapter.MECANISM);
 				javascriptExecutor.executeScript(
-						"document.getElementById('category-SH885jaRe0o').value= '" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
+						"document.getElementById('category-SH885jaRe0o').value='" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
 
 				periodMecanism = Boolean.TRUE;
 			}
