@@ -54,10 +54,13 @@ public class MetadataFormController extends JFrame {
 	private JRadioButton yesBtn;
 	private JRadioButton noBtn;
 
+	private JLabel driverPath;
+	private JTextField driverPathField;
+
 	public MetadataFormController() {
 
-		this.setTitle("DATIM Hack - ICAP v1.1");
-		this.setSize(400, 320);
+		this.setTitle("DATIM Hack - ICAP v1.2");
+		this.setSize(400, 360);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 
@@ -87,7 +90,7 @@ public class MetadataFormController extends JFrame {
 
 		this.dataFileField = new JTextField(20);
 		this.dataFileField.setEnabled(false);
-		this.dataFileField.setBounds(8, 170, 320, 25);
+		this.dataFileField.setBounds(8, 170, 340, 25);
 		panel.add(this.dataFileField);
 
 		this.urlField = new JTextField(20);
@@ -135,21 +138,32 @@ public class MetadataFormController extends JFrame {
 		this.viewBrowserGroup = new ButtonGroup();
 		this.yesBtn = new JRadioButton("Yes");
 		this.yesBtn.setBounds(100, 200, 80, 25);
+		this.yesBtn.addActionListener(Event -> this.driverPathField.setEnabled(Boolean.TRUE));
 
 		this.noBtn = new JRadioButton("No (Recommended)");
 		this.noBtn.setBounds(200, 200, 160, 25);
+		this.noBtn.addActionListener(Event -> this.driverPathField.setEnabled(Boolean.FALSE));
 
 		this.viewBrowserGroup.add(this.yesBtn);
 		this.viewBrowserGroup.add(this.noBtn);
 		panel.add(this.yesBtn);
 		panel.add(this.noBtn);
 
+		this.driverPath = new JLabel("Driver Path:");
+		this.driverPath.setBounds(10, 240, 100, 25);
+		panel.add(this.driverPath);
+
+		this.driverPathField = new JTextField();
+		this.driverPathField.setBounds(100, 240, 248, 25);
+		this.driverPathField.setEnabled(Boolean.FALSE);
+		panel.add(this.driverPathField);
+
 		this.submit = new JButton("Submit");
-		this.submit.setBounds(10, 240, 150, 25);
+		this.submit.setBounds(10, 280, 150, 25);
 		panel.add(this.submit);
 
 		this.close = new JButton("Close");
-		this.close.setBounds(200, 240, 150, 25);
+		this.close.setBounds(200, 280, 150, 25);
 		panel.add(this.close);
 
 		this.submit.addActionListener(event -> {
@@ -240,5 +254,9 @@ public class MetadataFormController extends JFrame {
 		}
 
 		return Boolean.FALSE;
+	}
+
+	public String getDriverPath() {
+		return this.driverPathField.getText();
 	}
 }

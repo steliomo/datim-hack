@@ -42,7 +42,7 @@ public class Application {
 			WebDriver browser = null;
 
 			if (metadataForm.visulizeBrowser()) {
-				System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+				System.setProperty("webdriver.chrome.driver", metadataForm.getDriverPath());
 
 				final ChromeOptions options = new ChromeOptions();
 				options.addArguments("--remote-allow-origins=*");
@@ -51,8 +51,11 @@ public class Application {
 				browser.manage().window().maximize();
 
 			} else {
+				final ChromeOptions options = new ChromeOptions();
+				options.addArguments("--remote-allow-origins=*");
+				options.addArguments("--headless");
 
-				browser = new ChromeDriver();
+				browser = new ChromeDriver(options);
 			}
 
 			metadataForm.visulizeBrowser();
