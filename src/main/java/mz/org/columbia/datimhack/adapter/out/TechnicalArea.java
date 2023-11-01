@@ -59,7 +59,9 @@ public enum TechnicalArea {
 
 	CXCA_TX("#PEPFAR_Tabs_vertical_5"),
 
-	TX_PVLS("#PEPFAR_Tabs_vertical_6");
+	TX_PVLS("#PEPFAR_Tabs_vertical_6"),
+
+	LAB_PTCQI("#PEPFAR_Tabs_vertical_7");
 
 	private final String techArea;
 

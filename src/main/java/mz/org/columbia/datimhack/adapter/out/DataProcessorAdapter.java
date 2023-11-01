@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +56,6 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 		DataProcessorAdapter.logger.info("Starting the input process...");
 
 		int counter = 0;
-		Boolean periodMecanism = Boolean.FALSE;
 		String lastOrgUnit = null;
 
 		this.driver.get(url + "dhis-web-dataentry/index.action");
@@ -71,16 +72,19 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 				this.sleepTimer.sleep(5.0);
 			}
 
-			if (!periodMecanism) {
+			final String period = (String) record.getValue(DataProcessorAdapter.PERIOD);
 
-				final String period = (String) record.getValue(DataProcessorAdapter.PERIOD);
+			final Select select = new Select(this.driver.findElement(By.id("selectedPeriodId")));
+			final WebElement option = select.getFirstSelectedOption();
+			final String selectedPeriod = option.getAttribute("value");
+
+			if (!period.equals(selectedPeriod)) {
+
 				javascriptExecutor.executeScript("document.getElementById('selectedPeriodId').value='" + period + "';periodSelected();");
 
 				final String mecanism = (String) record.getValue(DataProcessorAdapter.MECANISM);
 				javascriptExecutor.executeScript(
 						"document.getElementById('category-SH885jaRe0o').value='" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
-
-				periodMecanism = Boolean.TRUE;
 			}
 
 			if (!orgUnit.equals(lastOrgUnit)) {
@@ -128,7 +132,6 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 	public int cleanData(final String url, final List<GenericObject> data) {
 
 		int counter = 0;
-		Boolean periodMecanism = Boolean.FALSE;
 		String lastOrgUnit = null;
 
 		this.driver.get(url + "dhis-web-dataentry/index.action");
@@ -145,16 +148,19 @@ public class DataProcessorAdapter implements InputDataPort, CleanDataPort {
 				this.sleepTimer.sleep(5.0);
 			}
 
-			if (!periodMecanism) {
+			final String period = (String) record.getValue(DataProcessorAdapter.PERIOD);
 
-				final String period = (String) record.getValue(DataProcessorAdapter.PERIOD);
+			final Select select = new Select(this.driver.findElement(By.id("selectedPeriodId")));
+			final WebElement option = select.getFirstSelectedOption();
+			final String selectedPeriod = option.getAttribute("value");
+
+			if (!period.equals(selectedPeriod)) {
+
 				javascriptExecutor.executeScript("document.getElementById('selectedPeriodId').value='" + period + "';periodSelected();");
 
 				final String mecanism = (String) record.getValue(DataProcessorAdapter.MECANISM);
 				javascriptExecutor.executeScript(
 						"document.getElementById('category-SH885jaRe0o').value='" + mecanism + "';dhis2.de.attributeSelected('SH885jaRe0o');");
-
-				periodMecanism = Boolean.TRUE;
 			}
 
 			if (!orgUnit.equals(lastOrgUnit)) {

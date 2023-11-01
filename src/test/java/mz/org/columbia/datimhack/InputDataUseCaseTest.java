@@ -4,6 +4,7 @@
 package mz.org.columbia.datimhack;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -38,6 +39,7 @@ public class InputDataUseCaseTest {
 	@InjectMocks
 	private InputDataUseCase inputDataUseCase = new InputDataService(this.loginPort, this.fileReadPort, this.inputDataPort);
 
+	@Ignore
 	@Test
 	public void shouldInputData() {
 

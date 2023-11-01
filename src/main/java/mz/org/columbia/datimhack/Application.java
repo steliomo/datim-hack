@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import mz.org.columbia.datimhack.adapter.in.MetadataFormController;
 import mz.org.columbia.datimhack.adapter.out.DataProcessorAdapter;
 import mz.org.columbia.datimhack.adapter.out.FileReaderAdapter;
@@ -39,10 +40,11 @@ public class Application {
 
 		metadataForm.setActionProcess(() -> {
 
+			WebDriverManager.chromedriver().setup();
+
 			WebDriver browser = null;
 
 			if (metadataForm.visulizeBrowser()) {
-				System.setProperty("webdriver.chrome.driver", metadataForm.getDriverPath());
 
 				final ChromeOptions options = new ChromeOptions();
 				options.addArguments("--remote-allow-origins=*");
@@ -75,7 +77,7 @@ public class Application {
 
 				try {
 					final int records = inputDataUseCase.inputData(inputDataCommand);
-					JOptionPane.showMessageDialog(null, records + " where successfully submited..");
+					JOptionPane.showMessageDialog(null, "A total of " + records + " record(s) where successfully submited..");
 				} catch (final Exception e) {
 					JOptionPane.showMessageDialog(null, "There was an error processing data. Please try again!");
 				}
@@ -90,7 +92,7 @@ public class Application {
 
 				try {
 					final int records = cleanDataUseCase.cleanData(cleanDataCommand);
-					JOptionPane.showMessageDialog(null, records + " where successfully cleaned..");
+					JOptionPane.showMessageDialog(null, "A total of " + records + " record(s) where successfully cleaned..");
 				} catch (final Exception e) {
 					JOptionPane.showMessageDialog(null, "There was an error cleaning data. Please try again!");
 				}

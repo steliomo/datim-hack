@@ -11,7 +11,9 @@ public enum AssistanceType {
 
 	DSD("#PEPFAR_Form_X_DSD"),
 
-	TA("#PEPFAR_Form_X_TA");
+	TA("#PEPFAR_Form_X_TA"),
+
+	NA("#PEPFAR_Form_7_NA");
 
 	private String assistanceType;
 
